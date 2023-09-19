@@ -32,35 +32,32 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find the user by email
     const user = await UserData.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ message: "Email is not found", status: 401 });
+      return res
+        .status(401)
+        .json({ message: "Email is not found", status: 401 });
     }
-
-
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(402).json({ message: "Password is wrong", status: 402 });
+      return res
+        .status(402)
+        .json({ message: "Password is wrong", status: 402 });
     }
 
-    // Passwords match, login successful
     res.status(200).json({ message: "Login Successfully", status: 200 });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error", status: 500 });
   }
 });
-
-
 
 router.get("/gold-rates", async (req, res) => {
   try {

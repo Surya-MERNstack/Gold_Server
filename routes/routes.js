@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     );
   
     if (!validatePassword)
-      return res.status(401).json({ message: "Password is wrong" });
+      return res.status(402).json({ message: "Password is wrong" });
   
 
     await UserData.findOne({

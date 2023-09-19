@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
   const result = await UserData.findOne({ email: email });
 
   if (result)
-    return res.status(400).json({ message: "email is already exists!!!" });
+    return res.status(400).json({ message: "email is already exists!!!" , status : 400});
 
   try {
     await newUser.save();
@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
       .status(200)
       .json({ message: "Successfully registered", status: 200, Data: newUser });
   } catch (err) {
-    res.status(400).json({ message: err, status: 400 });
+    res.status(402).json({ message: err, status: 402 });
   }
 });
 
@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
 
     const result = await UserData.findOne({email: req.body.email});
 
-    if (!result) return res.status(401).json({ message: "Email is not found" });
+    if (!result) return res.status(401).json({ message: "Email is not found" ,status : 401});
 
     console.log("compare", result.email, result.password )
 
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     );
   
     if (!validatePassword)
-      return res.status(402).json({ message: "Password is wrong" });
+      return res.status(402).json({ message: "Password is wrong" ,message : 402});
   
 
     await UserData.findOne({
